@@ -12,9 +12,23 @@ pipeline {
                 sh 'mvn test'
             }
         }
-        stage('Docker Build') {
+        stage('Docker Build & Tag') {
             steps {
-                sh 'docker build -t siddheshhh/calculator-app:1.0 .'
+                sh 'docker build -t calculator-app:1.0 .'
+                sh 'docker tag calculator-app:1.0 siddheshhh/calculator-app:1.0'
+            }
+        }
+        stage('Docker Push') {
+            steps {
+                withCredentials([usernamePassword(
+                        credentialsId: 'dockerhub-creds',
+                        usernameVariable: 'DOCKER_USER',
+                        passwordVariable: 'DOCKER_PASS')]) {
+                    sh '''
+                        echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+                        docker push siddheshhh/calculator-app:1.0
+                    '''
+                }
             }
         }
     }
