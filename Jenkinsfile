@@ -32,4 +32,17 @@ pipeline {
             }
         }
     }
+    post {
+        success {
+            mail to: 'siddhesh.ghanasham@iiitb.ac.in',
+                 subject: "Build Success",
+                 body: "Calculator build succeeded!"
+        }
+    
+        failure {
+            mail to: 'siddhesh.ghanasham@iiitb.ac.in',
+                 subject: "Build Failed",
+                 body: "Build failed. Check Jenkins."
+        }
+    }
 }
