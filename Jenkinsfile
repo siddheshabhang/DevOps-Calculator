@@ -42,15 +42,29 @@ pipeline {
     }
     post {
         success {
-            mail to: 'siddhesh.ghanasham@iiitb.ac.in',
-                 subject: "Build Success",
-                 body: "Calculator build succeeded!"
+            emailext(
+                subject: "SUCCESS: Build ${env.BUILD_NUMBER}",
+                body: """
+                    Build Successful
+        
+                    Job: ${env.JOB_NAME}
+                    Build URL: ${env.BUILD_URL}
+                    """,
+                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+            )
         }
     
         failure {
-            mail to: 'siddhesh.ghanasham@iiitb.ac.in',
-                 subject: "Build Failed",
-                 body: "Build failed. Check Jenkins."
+            emailext(
+                subject: "FAILED: Build ${env.BUILD_NUMBER}",
+                body: """
+                    Build Failed
+        
+                    Job: ${env.JOB_NAME}
+                    Build URL: ${env.BUILD_URL}
+                    """,
+                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+            )
         }
     }
 }
