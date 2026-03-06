@@ -9,6 +9,7 @@ public class Main {
         int choice;
         do {
             System.out.println("\n===== Scientific Calculator =====");
+	    System.out.println("0. Show Menu");
             System.out.println("1. Addition");
             System.out.println("2. Subtraction");
             System.out.println("3. Multiplication");
@@ -23,6 +24,10 @@ public class Main {
             choice = sc.nextInt();
             try {
                 switch (choice) {
+	            case 0 -> {
+		        continue;
+	            }
+
                     case 1 -> {
                         System.out.print("Enter first number: ");
                         double a = sc.nextDouble();
