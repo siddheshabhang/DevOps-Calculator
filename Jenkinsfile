@@ -1,6 +1,8 @@
 pipeline {
     agent any
-  
+    environment {
+        COMMIT_AUTHOR_EMAIL = sh(returnStdout: true, script: 'git log -1 --format="%ae"').trim()
+    }
     stages {
         stage('Build') {
             steps {
@@ -50,7 +52,7 @@ pipeline {
                     Job: ${env.JOB_NAME}
                     Build URL: ${env.BUILD_URL}
                     """,
-                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                to: "${COMMIT_AUTHOR_EMAIL}"
             )
         }
     
@@ -63,7 +65,7 @@ pipeline {
                     Job: ${env.JOB_NAME}
                     Build URL: ${env.BUILD_URL}
                     """,
-                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                to: "${COMMIT_AUTHOR_EMAIL}"
             )
         }
     }
