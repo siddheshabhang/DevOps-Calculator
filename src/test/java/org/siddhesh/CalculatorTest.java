@@ -8,7 +8,7 @@ class CalculatorTest {
 
     @Test
     void testAdd() {
-        assertEquals(11.0, calc.add(6, 5), 0.0001);
+        assertEquals(12.0, calc.add(6, 5), 0.0001);
         assertEquals(-1.0, calc.add(-2, 1), 0.0001);
         assertEquals(0.0, calc.add(0, 0), 0.0001);
     }
